@@ -11,6 +11,12 @@ df = pd.read_csv("AmesHousing (1).csv")
 print (df.head())
 print(df.info())
 
+Average_Sale_Price = df["SalePrice"].mean()
+Average_Price_Per_SqFt = Average_Sale_Price / df["Gr Liv Area"].mean()
+summary_df = pd.DataFrame({
+    "average_sale_price": [Average_Sale_Price],
+    "average_price_per_SqFt": [Average_Price_Per_SqFt]
+})
 # Price Distribution Analysis
 fig1 = px.histogram(df, x="SalePrice", color="Yr Sold", hover_name="SalePrice", title="Ames Housing Sales")
 
@@ -31,4 +37,6 @@ st.text(text2, text_alignment="justify")
 st.plotly_chart(fig3, use_container_width=True)
 st.text(text3, text_alignment="justify")
 
-
+print(summary_df["average_sale_price"])
+summary_df.to_csv("summer_kpis.csv", index=False)
+df.to_csv("housing_data.csv", index=False)
